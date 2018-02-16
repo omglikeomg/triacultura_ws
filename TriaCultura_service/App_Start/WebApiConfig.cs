@@ -25,6 +25,12 @@ namespace TriaCultura_service
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            var json = config.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+            json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
         }
     }
 }
