@@ -10,20 +10,13 @@ namespace TriaCultura_service.Controllers
 {
     public class TriaCulturaController : ApiController
     {
-        // GET api/factures/{id}/{id2}
-        [Route("api/factures/{start_id?}/{end_id?}")]
-        public HttpResponseMessage Get(int start_id, int end_id)
-        {
-            var invoices = Repository.GetInvoices(start_id, end_id, true);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, invoices);
-            return response;
-        }
 
         // GET api/usuari
         [Route("api/usuari/{dni:alpha}")]
         public HttpResponseMessage GetUser_by_dni(string dni)
         {
 
+            return null;
         }
 
         // POST api/usuari
@@ -31,6 +24,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage PostNewPass(int id, string new_pass)
         {
 
+            return null;
         }
 
 
@@ -39,6 +33,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetProjects_for_place(int place_id)
         {
 
+            return null;
         }
 
         //GET api/votes
@@ -46,13 +41,14 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetVotes_for_user(int user_id)
         {
 
+            return null;
         }
 
         //PUT api/votes
         [Route("api/votes/{user_id?}/{project_id?}")]
         public HttpResponseMessage PutNewVote(int user_id, int project_id)
         {
-
+            return null;
         }
 
         //DELETE api/votes
@@ -60,6 +56,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage DeleteVote(int user_id, int project_id)
         {
 
+            return null;
         }
 
         //GET api/project
@@ -67,6 +64,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetProject(int project_id)
         {
 
+            return null;
         }
 
         //GET api/requests
@@ -74,6 +72,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetWinningRequests()
         {
 
+            return null;
         }
 
         //GET api/files
@@ -81,6 +80,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetFiles_for_Project(int project_id)
         {
 
+            return null;
         }
 
         //GET api/author
@@ -88,6 +88,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetAuthor_for_Project(int project_id)
         {
 
+            return null;
         }
 
         //GET api/rating
@@ -95,12 +96,14 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetProject_avg_rating(int project_id)
         {
 
+            return null;
         }
 
         [Route("api/rating/{user_id?}/{project_id?}")]
         public HttpResponseMessage GetUserRating_for_project (int user_id, int project_id)
         {
 
+            return null;
         }
 
     }
