@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cc7d5aa1432e4eb594497adf82ec15fb" Name="Diagram1">
+        <EntityTypeShape EntityType="triaculturaDBModel.author" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.file" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.place" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.project" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.rating" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.request" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.user" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.vote" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="triaculturaDBModel.FK_project_author" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_file_project" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_request_place" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_rating_project" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_request_project" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_vote_project" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_rating_user" ManuallyRouted="false" />
+        <AssociationConnector Association="triaculturaDBModel.FK_vote_user" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
