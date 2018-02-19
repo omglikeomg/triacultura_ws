@@ -7,43 +7,35 @@ namespace TriaCultura_service.Models
 {
     public class Repository
     {
-        private static triaculturaCTXEntities dataContext = new ChinookEntities();
-        public static List<Invoice> GetInvoicesClient(int client_id, bool serialize)
+        private static triaculturaCTXEntities context = new triaculturaCTXEntities();
+        public static user GetUser(string dni, bool serialize)
         {
-            List<Invoice> li = dataContext.Invoices.Where(x => x.CustomerId == client_id).ToList();
-            foreach (Invoice factura in li)
-            {
-                factura.SerializeVirtualProperties = serialize;
-            }
-            return li;
+            user us = context.users.Where(x => x.dni == dni).SingleOrDefault();
+            //us.SerializeVirtualProperties = serialize;
+            return us;
         }
 
-        public static List<Invoice> GetInvoices(int start, int end, bool serialize)
+        public static void ChangePasswd(string dni, string passwd)
         {
-            List<Invoice> li = dataContext.Invoices.Where(x => x.InvoiceId >= start && x.InvoiceId <= end).ToList();
-            foreach (Invoice factura in li)
-            {
-                factura.SerializeVirtualProperties = serialize;
-            }
-            return li;
+            user us = context.users.Where(x => x.dni == dni).SingleOrDefault();
+            us.password = passwd;
+            context.SaveChanges();
         }
 
-        public static List<Invoice> GetInvoicesTrack(int track_id, bool serialize)
+        public static List<project> GetProjectes(int place_id, bool serialize)
         {
-            List<InvoiceLine> aux_list = dataContext.InvoiceLines.Where(x => x.TrackId == track_id).ToList();
-            List<Invoice> li = new List<Invoice>();
-            foreach (InvoiceLine line in aux_list)
-            {
-                if (!li.Contains(line.Invoice))
-                {
-                    li.Add(line.Invoice);
-                }
-            }
-            foreach (Invoice factura in li)
-            {
-                factura.SerializeVirtualProperties = serialize;
-            }
-            return li;
 
-        }
+            List<request> request = context.requests.Where(x=> x.place_id == place_id).ToList();
+
+            List<project> projects = context.projects.Where(x => x.id_project == request);
+            foreach (project p in projects)
+            {
+              //  p.SerializeVirtualProperties = serialize;
+            }
+            return projects;
+        } 
+
+
+
     }
+}
