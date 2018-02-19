@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TriaCultura_service.Models
 {
-    public class Repository
+    public class TriaCulturaRepository
     {
         private static triaculturaCTXEntities context = new triaculturaCTXEntities();
         public static user GetUser(string dni, bool serialize)

@@ -15,7 +15,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/usuari/{dni:alpha}")]
         public HttpResponseMessage GetUser_by_dni(string dni)
         {
-            var user = Repository.GetUser(dni, true);
+            var user = TriaCulturaRepository.GetUser(dni, true);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, user);
             return response;
         }
@@ -24,7 +24,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/usuari/{id?}/{new_pass:alpha}")]
         public HttpResponseMessage PostNewPass(int id, string new_pass)
         {
-            var user = Repository.ChangePasswd(id, new_pass);
+            var user = TriaCulturaRepository.ChangePasswd(id, new_pass);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, user);
             return response;
         }
@@ -34,7 +34,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/projects/{place_id?}")]
         public HttpResponseMessage GetProjects_for_place(int place_id)
         {
-            var places = Repository.GetProjectes(place_id, true);
+            var places = TriaCulturaRepository.GetProjectes(place_id, true);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, places);
             return response;
         }
@@ -43,7 +43,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/votes/{user_id?}")]
         public HttpResponseMessage GetVotes_for_user(int user_id)
         {
-            var votes = Repository.GetVotes(user_id, true);
+            var votes = TriaCulturaRepository.GetVotes(user_id, true);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, votes);
 
             return response;
@@ -53,7 +53,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/votes/{user_id?}/{project_id?}")]
         public HttpResponseMessage PostNewVote(int user_id, int project_id)
         {
-            var vote = Repository.postVote(user_id, project_id);
+            var vote = TriaCulturaRepository.postVote(user_id, project_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, vote);
 
             return response;
@@ -63,7 +63,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/votes/{user_id?}/{project_id?}")]
         public HttpResponseMessage DeleteVote(int user_id, int project_id)
         {
-            Repository.removeVote(user_id, project_id);
+            TriaCulturaRepository.removeVote(user_id, project_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
@@ -82,7 +82,7 @@ namespace TriaCultura_service.Controllers
         public HttpResponseMessage GetWinningRequests()
         {
 
-            var requests = Repository.getAllRequest(true);
+            var requests = TriaCulturaRepository.getAllRequest(true);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, requests);
             return response;
         }
@@ -91,7 +91,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/files/{project_id?}")]
         public HttpResponseMessage GetFiles_for_Project(int project_id)
         {
-            var files = Repository.getfiles(project_id, false);
+            var files = TriaCulturaRepository.getfiles(project_id, false);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, files);
 
             return null;
@@ -101,7 +101,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/author/{project_id?}")]
         public HttpResponseMessage GetAuthor_for_Project(int project_id)
         {
-            var author = Repository.getAuthorWhereProject(project_id);
+            var author = TriaCulturaRepository.getAuthorWhereProject(project_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, author);
 
             return response;
@@ -111,7 +111,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/rating/{project_id?}")]
         public HttpResponseMessage GetProject_avg_rating(int project_id)
         {
-            var avg_rating = Repository.getCountRating(project_id);
+            var avg_rating = TriaCulturaRepository.getCountRating(project_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, avg_rating);
 
             return response;
@@ -120,7 +120,8 @@ namespace TriaCultura_service.Controllers
         [Route("api/rating/{user_id?}/{project_id?}")]
         public HttpResponseMessage GetUserRating_for_project (int user_id, int project_id)
         {
-            var rating = Repository.getRatingsWhereAuthorAndProject(user_id,project_id);
+            var rating = TriaCulturaRepository.getRatingsWhereAuthor(user_id,project_id);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating);
 
             return response;
         }

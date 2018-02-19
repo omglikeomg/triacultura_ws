@@ -246,7 +246,7 @@
     <Compile Include="Models\rating.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\TriaCulturaRepository.cs" />
     <Compile Include="Models\request.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
