@@ -15,11 +15,12 @@ namespace TriaCultura_service.Models
             return us;
         }
 
-        public static void ChangePasswd(int user_id, string passwd)
+        public static user ChangePasswd(int user_id, string passwd)
         {
             user us = context.users.Where(x => x.id == user_id).SingleOrDefault();
             us.password = passwd;
             context.SaveChanges();
+            return us;
         }
 
         public static List<project> GetProjectes(int place_id, bool serialize)
@@ -61,17 +62,15 @@ namespace TriaCultura_service.Models
             return requests;
         }
 
-        public static user putVote(int user_id, int project_id)
+        public static vote postVote(int user_id, int project_id)
         {
-            user u = context.users.Where(x => x.id == user_id).SingleOrDefault();
-            project p = context.projects.Where(x=> x.id_project == project_id).SingleOrDefault();
             vote v = new vote();
-            v.project_id = p.id_project;
-            v.user_id = u.id;
+            v.project_id = project_id;
+            v.user_id = user_id;
             v.date = DateTime.Now;
             context.votes.Add(v);
             context.SaveChanges();
-            return u;
+            return v;
         }
 
         public static void removeVote(int user_id, int project_id)
