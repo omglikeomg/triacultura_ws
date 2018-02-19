@@ -114,7 +114,11 @@ namespace TriaCultura_service.Models
             List<rating> ratings = context.ratings.Where(x => x.user_id == user_id).ToList();
             return ratings;
         }
-
+        public static rating getRatingsWhereAuthor(int user_id, int project_id)
+        {
+            rating rating = context.ratings.Where(x => x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            return rating;
+        }
 
     }
 }
