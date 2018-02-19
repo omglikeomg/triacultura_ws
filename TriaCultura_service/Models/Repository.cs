@@ -15,9 +15,9 @@ namespace TriaCultura_service.Models
             return us;
         }
 
-        public static void ChangePasswd(string dni, string passwd)
+        public static void ChangePasswd(int user_id, string passwd)
         {
-            user us = context.users.Where(x => x.dni == dni).SingleOrDefault();
+            user us = context.users.Where(x => x.id == user_id).SingleOrDefault();
             us.password = passwd;
             context.SaveChanges();
         }
