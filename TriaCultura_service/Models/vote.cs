@@ -9,9 +9,10 @@
 
 namespace TriaCultura_service.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class vote
     {
         public int id_vote { get; set; }
