@@ -21,6 +21,10 @@
         <AssociationConnector Association="triaculturaDBModel.FK_vote_project" ManuallyRouted="false" />
         <AssociationConnector Association="triaculturaDBModel.FK_rating_user" ManuallyRouted="false" />
         <AssociationConnector Association="triaculturaDBModel.FK_vote_user" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="triaculturaDBModel.capacity" Width="1.5" PointX="3" PointY="13.25" />
+        <EntityTypeShape EntityType="triaculturaDBModel.place_has_capacity" Width="1.5" PointX="5.25" PointY="12" />
+        <AssociationConnector Association="triaculturaDBModel.FK_place_has_capacity_capacity" />
+        <AssociationConnector Association="triaculturaDBModel.FK_place_has_capacity_place" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
