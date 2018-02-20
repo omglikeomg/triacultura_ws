@@ -12,7 +12,7 @@ namespace TriaCultura_service.Controllers
     {
 
         // GET api/usuari
-        [Route("api/usuari/{dni:alpha}")]
+        [Route("api/usuari/{dni?}")]
         public HttpResponseMessage GetUser_by_dni(string dni)
         {
             var user = TriaCulturaRepository.GetUser(dni, true);
@@ -21,7 +21,7 @@ namespace TriaCultura_service.Controllers
         }
 
         // POST api/usuari
-        [Route("api/usuari/{id?}/{new_pass:alpha}")]
+        [Route("api/usuari/{id?}/{new_pass?}")]
         public HttpResponseMessage PostNewPass(int id, string new_pass)
         {
             var user = TriaCulturaRepository.ChangePasswd(id, new_pass);
@@ -94,7 +94,7 @@ namespace TriaCultura_service.Controllers
             var files = TriaCulturaRepository.getfiles(project_id, false);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, files);
 
-            return null;
+            return response;
         }
 
         //GET api/author

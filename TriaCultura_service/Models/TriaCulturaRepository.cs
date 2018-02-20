@@ -83,7 +83,14 @@ namespace TriaCultura_service.Models
 
         public static List<file> getfiles(int project_id, bool serialize)
         {
-            List<file> files = context.files.Where(x => x.project_id == project_id).ToList();
+            List<file> files = null;
+            try
+            {
+                files = context.files.Where(x => x.project_id == project_id).ToList();
+            } catch (Exception ex)
+            {
+                /*?*/
+            }
             /*foreach (file f in files)
             {
                 f.SerializeVirtualProperties = serialize;
