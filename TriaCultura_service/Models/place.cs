@@ -9,9 +9,10 @@
 
 namespace TriaCultura_service.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class place
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,11 +21,25 @@ namespace TriaCultura_service.Models
             this.requests = new HashSet<request>();
             this.place_has_capacity = new HashSet<place_has_capacity>();
         }
+        public place (bool serialize)
+        {
+            this.requests = new HashSet<request>();
+            this.SerializeVirtualProperties = serialize;
+        }
     
         public int id_place { get; set; }
         public string name { get; set; }
         public int capacity { get; set; }
         public string address { get; set; }
+
+        [JsonIgnore]
+        public bool SerializeVirtualProperties { get; set; }
+
+        public bool ShouldSerializerequests ()
+        {
+            return SerializeVirtualProperties;
+        }
+    
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<request> requests { get; set; }

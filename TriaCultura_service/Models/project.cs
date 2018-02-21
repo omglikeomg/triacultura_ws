@@ -9,9 +9,10 @@
 
 namespace TriaCultura_service.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class project
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,14 @@ namespace TriaCultura_service.Models
             this.requests = new HashSet<request>();
             this.votes = new HashSet<vote>();
         }
+        public project(bool serialize)
+        {
+            this.files = new HashSet<file>();
+            this.ratings = new HashSet<rating>();
+            this.requests = new HashSet<request>();
+            this.votes = new HashSet<vote>();
+            this.SerializeVirtualProperties = serialize;
+        }
     
         public int id_project { get; set; }
         public string title { get; set; }
@@ -30,6 +39,26 @@ namespace TriaCultura_service.Models
         public string author_dni { get; set; }
         public string type { get; set; }
     
+        [JsonIgnore]
+        public bool SerializeVirtualProperties { get; set; }
+
+        public bool ShouldSerializefiles()
+        {
+            return SerializeVirtualProperties;
+        }
+    
+        public bool ShouldSerializevotes()
+        {
+            return SerializeVirtualProperties;
+        }
+        public bool ShouldSerializerequests()
+        {
+            return SerializeVirtualProperties;
+        }
+        public bool ShouldSerializeratings()
+        {
+            return SerializeVirtualProperties;
+        }
         public virtual author author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<file> files { get; set; }
