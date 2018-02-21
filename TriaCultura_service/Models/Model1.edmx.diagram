@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="triaculturaDBModel.file" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.place" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.project" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="triaculturaDBModel.rating" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="triaculturaDBModel.rating" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.request" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.user" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.vote" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />

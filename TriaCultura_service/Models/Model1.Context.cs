@@ -33,5 +33,7 @@ namespace TriaCultura_service.Models
         public virtual DbSet<request> requests { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<vote> votes { get; set; }
+        public virtual DbSet<capacity> capacities { get; set; }
+        public virtual DbSet<place_has_capacity> place_has_capacity { get; set; }
     }
 }

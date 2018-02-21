@@ -12,15 +12,14 @@ namespace TriaCultura_service.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class rating
+    public partial class place_has_capacity
     {
-        public int id_rating { get; set; }
-        public Nullable<int> rate { get; set; }
-        public int user_id { get; set; }
-        public int project_id { get; set; }
-        public string comment { get; set; }
+        public int capacity_id { get; set; }
+        public int place_id { get; set; }
+        public Nullable<int> vol_capacity { get; set; }
+        public Nullable<decimal> fee { get; set; }
     
-        public virtual project project { get; set; }
-        public virtual user user { get; set; }
+        public virtual capacity capacity { get; set; }
+        public virtual place place { get; set; }
     }
 }
