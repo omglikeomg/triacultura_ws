@@ -49,7 +49,7 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        //PUT api/votes
+        //POST api/votes
         [Route("api/votes/{user_id?}/{project_id?}")]
         public HttpResponseMessage PostNewVote(int user_id, int project_id)
         {

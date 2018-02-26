@@ -105,14 +105,14 @@ namespace TriaCultura_service.Models
             return a;
         }
         
-        public static int getCountRating(int project_id)
+        public static double getCountRating(int project_id)
         {
             List<rating> ratings = context.ratings.Where(x => x.project_id == project_id).ToList();
             
             if (ratings.Count > 0)
             {
-                int total = (int)ratings.Select(x => x.rate).Sum();
-                return total / ratings.Count;
+                double total = (double)ratings.Select(x => x.rate).Sum();
+                return (double)total / ratings.Count;
             }
             return 0;
         }
