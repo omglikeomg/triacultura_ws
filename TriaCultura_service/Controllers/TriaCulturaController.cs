@@ -97,6 +97,15 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
+        //GET api/file
+        [Route("api/file/{file_id?}")]
+        public HttpResponseMessage getSingleFile(int file_id)
+        {
+            var file = TriaCulturaRepository.getSingleFile(file_id);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, file);
+            return response;
+        }
+
         //GET api/author
         [Route("api/author/{project_id?}")]
         public HttpResponseMessage GetAuthor_for_Project(int project_id)

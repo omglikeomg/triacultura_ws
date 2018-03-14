@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="triaculturaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="triaculturaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="author">
           <Key>
             <PropertyRef Name="dni" />
@@ -30,6 +30,7 @@
           <Property Name="extension" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="path" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="project_id" Type="int" />
+          <Property Name="file_content" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="place">
           <Key>
@@ -270,7 +271,8 @@
             <End Role="vote" EntitySet="vote" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="triaculturaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -284,6 +286,14 @@
           <Property Name="address" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="projects" Relationship="Self.FK_project_author" FromRole="author" ToRole="project" />
         </EntityType>
+        <EntityType Name="capacity">
+          <Key>
+            <PropertyRef Name="id_capacity" />
+          </Key>
+          <Property Name="id_capacity" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_spectacle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="place_has_capacity" Relationship="Self.FK_place_has_capacity_capacity" FromRole="capacity" ToRole="place_has_capacity" />
+        </EntityType>
         <EntityType Name="file">
           <Key>
             <PropertyRef Name="id_file" />
@@ -293,6 +303,7 @@
           <Property Name="extension" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="path" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="project_id" Type="Int32" />
+          <Property Name="file_content" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="project" Relationship="Self.FK_file_project" FromRole="file" ToRole="project" />
         </EntityType>
         <EntityType Name="place">
@@ -303,8 +314,20 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="capacity" Type="Int32" Nullable="false" />
           <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="place_has_capacity" Relationship="Self.FK_place_has_capacity_place" FromRole="place" ToRole="place_has_capacity" />
           <NavigationProperty Name="requests" Relationship="Self.FK_request_place" FromRole="place" ToRole="request" />
-          <NavigationProperty Name="place_has_capacity" Relationship="triaculturaDBModel.FK_place_has_capacity_place" FromRole="place" ToRole="place_has_capacity" />
+        </EntityType>
+        <EntityType Name="place_has_capacity">
+          <Key>
+            <PropertyRef Name="capacity_id" />
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="capacity_id" Type="Int32" Nullable="false" />
+          <Property Name="place_id" Type="Int32" Nullable="false" />
+          <Property Name="vol_capacity" Type="Int32" />
+          <Property Name="fee" Type="Decimal" Precision="6" Scale="0" />
+          <NavigationProperty Name="capacity" Relationship="Self.FK_place_has_capacity_capacity" FromRole="place_has_capacity" ToRole="capacity" />
+          <NavigationProperty Name="place" Relationship="Self.FK_place_has_capacity_place" FromRole="place_has_capacity" ToRole="place" />
         </EntityType>
         <EntityType Name="project">
           <Key>
@@ -330,9 +353,9 @@
           <Property Name="rate" Type="Int32" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="project_id" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="project" Relationship="Self.FK_rating_project" FromRole="rating" ToRole="project" />
           <NavigationProperty Name="user" Relationship="Self.FK_rating_user" FromRole="rating" ToRole="user" />
-          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="request">
           <Key>
@@ -379,6 +402,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_place_has_capacity_capacity">
+          <End Role="capacity" Type="Self.capacity" Multiplicity="1" />
+          <End Role="place_has_capacity" Type="Self.place_has_capacity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="capacity">
+              <PropertyRef Name="id_capacity" />
+            </Principal>
+            <Dependent Role="place_has_capacity">
+              <PropertyRef Name="capacity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_file_project">
           <End Role="project" Type="Self.project" Multiplicity="0..1" />
           <End Role="file" Type="Self.file" Multiplicity="*" />
@@ -388,6 +423,18 @@
             </Principal>
             <Dependent Role="file">
               <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_place_has_capacity_place">
+          <End Role="place" Type="Self.place" Multiplicity="1" />
+          <End Role="place_has_capacity" Type="Self.place_has_capacity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id_place" />
+            </Principal>
+            <Dependent Role="place_has_capacity">
+              <PropertyRef Name="place_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -465,8 +512,10 @@
         </Association>
         <EntityContainer Name="triaculturaCTXEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="authors" EntityType="Self.author" />
+          <EntitySet Name="capacities" EntityType="Self.capacity" />
           <EntitySet Name="files" EntityType="Self.file" />
           <EntitySet Name="places" EntityType="Self.place" />
+          <EntitySet Name="place_has_capacity" EntityType="Self.place_has_capacity" />
           <EntitySet Name="projects" EntityType="Self.project" />
           <EntitySet Name="ratings" EntityType="Self.rating" />
           <EntitySet Name="requests" EntityType="Self.request" />
@@ -476,9 +525,17 @@
             <End Role="author" EntitySet="authors" />
             <End Role="project" EntitySet="projects" />
           </AssociationSet>
+          <AssociationSet Name="FK_place_has_capacity_capacity" Association="Self.FK_place_has_capacity_capacity">
+            <End Role="capacity" EntitySet="capacities" />
+            <End Role="place_has_capacity" EntitySet="place_has_capacity" />
+          </AssociationSet>
           <AssociationSet Name="FK_file_project" Association="Self.FK_file_project">
             <End Role="project" EntitySet="projects" />
             <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_place_has_capacity_place" Association="Self.FK_place_has_capacity_place">
+            <End Role="place" EntitySet="places" />
+            <End Role="place_has_capacity" EntitySet="place_has_capacity" />
           </AssociationSet>
           <AssociationSet Name="FK_request_place" Association="Self.FK_request_place">
             <End Role="place" EntitySet="places" />
@@ -504,61 +561,7 @@
             <End Role="user" EntitySet="users" />
             <End Role="vote" EntitySet="votes" />
           </AssociationSet>
-          <EntitySet Name="capacities" EntityType="triaculturaDBModel.capacity" />
-          <EntitySet Name="place_has_capacity" EntityType="triaculturaDBModel.place_has_capacity" />
-          <AssociationSet Name="FK_place_has_capacity_capacity" Association="triaculturaDBModel.FK_place_has_capacity_capacity">
-            <End Role="capacity" EntitySet="capacities" />
-            <End Role="place_has_capacity" EntitySet="place_has_capacity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_place_has_capacity_place" Association="triaculturaDBModel.FK_place_has_capacity_place">
-            <End Role="place" EntitySet="places" />
-            <End Role="place_has_capacity" EntitySet="place_has_capacity" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="capacity">
-          <Key>
-            <PropertyRef Name="id_capacity" />
-          </Key>
-          <Property Name="id_capacity" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="type_spectacle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="place_has_capacity" Relationship="triaculturaDBModel.FK_place_has_capacity_capacity" FromRole="capacity" ToRole="place_has_capacity" />
-        </EntityType>
-        <EntityType Name="place_has_capacity">
-          <Key>
-            <PropertyRef Name="capacity_id" />
-            <PropertyRef Name="place_id" />
-          </Key>
-          <Property Name="capacity_id" Type="Int32" Nullable="false" />
-          <Property Name="place_id" Type="Int32" Nullable="false" />
-          <Property Name="vol_capacity" Type="Int32" />
-          <Property Name="fee" Type="Decimal" Precision="6" Scale="0" />
-          <NavigationProperty Name="capacity" Relationship="triaculturaDBModel.FK_place_has_capacity_capacity" FromRole="place_has_capacity" ToRole="capacity" />
-          <NavigationProperty Name="place" Relationship="triaculturaDBModel.FK_place_has_capacity_place" FromRole="place_has_capacity" ToRole="place" />
-        </EntityType>
-        <Association Name="FK_place_has_capacity_capacity">
-          <End Type="triaculturaDBModel.capacity" Role="capacity" Multiplicity="1" />
-          <End Type="triaculturaDBModel.place_has_capacity" Role="place_has_capacity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="capacity">
-              <PropertyRef Name="id_capacity" />
-            </Principal>
-            <Dependent Role="place_has_capacity">
-              <PropertyRef Name="capacity_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_place_has_capacity_place">
-          <End Type="triaculturaDBModel.place" Role="place" Multiplicity="1" />
-          <End Type="triaculturaDBModel.place_has_capacity" Role="place_has_capacity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="place">
-              <PropertyRef Name="id_place" />
-            </Principal>
-            <Dependent Role="place_has_capacity">
-              <PropertyRef Name="place_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -575,6 +578,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="capacities">
+            <EntityTypeMapping TypeName="triaculturaDBModel.capacity">
+              <MappingFragment StoreEntitySet="capacity">
+                <ScalarProperty Name="id_capacity" ColumnName="id_capacity" />
+                <ScalarProperty Name="type_spectacle" ColumnName="type_spectacle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="files">
             <EntityTypeMapping TypeName="triaculturaDBModel.file">
               <MappingFragment StoreEntitySet="file">
@@ -583,6 +594,7 @@
                 <ScalarProperty Name="extension" ColumnName="extension" />
                 <ScalarProperty Name="path" ColumnName="path" />
                 <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="file_content" ColumnName="file_content" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -593,6 +605,16 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="capacity" ColumnName="capacity" />
                 <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="place_has_capacity">
+            <EntityTypeMapping TypeName="triaculturaDBModel.place_has_capacity">
+              <MappingFragment StoreEntitySet="place_has_capacity">
+                <ScalarProperty Name="capacity_id" ColumnName="capacity_id" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="vol_capacity" ColumnName="vol_capacity" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -611,11 +633,11 @@
           <EntitySetMapping Name="ratings">
             <EntityTypeMapping TypeName="triaculturaDBModel.rating">
               <MappingFragment StoreEntitySet="rating">
-                <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="id_rating" ColumnName="id_rating" />
                 <ScalarProperty Name="rate" ColumnName="rate" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -646,24 +668,6 @@
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="project_id" ColumnName="project_id" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="capacities">
-            <EntityTypeMapping TypeName="triaculturaDBModel.capacity">
-              <MappingFragment StoreEntitySet="capacity">
-                <ScalarProperty Name="type_spectacle" ColumnName="type_spectacle" />
-                <ScalarProperty Name="id_capacity" ColumnName="id_capacity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="place_has_capacity">
-            <EntityTypeMapping TypeName="triaculturaDBModel.place_has_capacity">
-              <MappingFragment StoreEntitySet="place_has_capacity">
-                <ScalarProperty Name="fee" ColumnName="fee" />
-                <ScalarProperty Name="vol_capacity" ColumnName="vol_capacity" />
-                <ScalarProperty Name="place_id" ColumnName="place_id" />
-                <ScalarProperty Name="capacity_id" ColumnName="capacity_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

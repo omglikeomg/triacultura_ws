@@ -91,11 +91,25 @@ namespace TriaCultura_service.Models
             {
                 /*?*/
             }
-            /*foreach (file f in files)
+            foreach (file f in files)
             {
                 f.SerializeVirtualProperties = serialize;
-            }*/
+            }
             return files;
+        }
+
+        public static file getSingleFile(int file_id)
+        {
+            file f = null;
+            try
+            {
+                f = context.files.Where(x => x.id_file == file_id).SingleOrDefault();
+            } catch (Exception e)
+            {
+                /*?*/
+            }
+            f.SerializeVirtualProperties = true;
+            return f;
         }
 
         public static author getAuthorWhereProject(int project_id)
