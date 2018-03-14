@@ -28,6 +28,10 @@ namespace TriaCultura_service.Models
         {
             SerializeVirtualProperties = with_content;   
         }
+        public file ()
+        {
+
+        }
         [JsonIgnore]
         public bool SerializeVirtualProperties { get; set; }
 
