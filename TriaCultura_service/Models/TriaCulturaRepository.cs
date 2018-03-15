@@ -37,6 +37,10 @@ namespace TriaCultura_service.Models
             foreach (project p in projects)
             {
                 p.SerializeVirtualProperties = serialize;
+                foreach(file f in p.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
             }
 
             return projects;
@@ -45,10 +49,13 @@ namespace TriaCultura_service.Models
         public static List<vote> GetVotes(int user_id, bool serialize)
         {
             List<vote> votes = context.votes.Where(x => x.user_id == user_id).OrderBy(x=> x.date).ToList();
-         /* foreach (vote v in votes)
+         foreach (vote v in votes)
             {
-                v.SerializeVirtualProperties = serialize;
-            }*/
+                foreach (file f in v.project.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+            }
                 return votes;
         }
 
@@ -59,6 +66,15 @@ namespace TriaCultura_service.Models
             {
                 r.SerializeVirtualProperties = serialize;
             }*/
+
+            foreach (request r in requests)
+            {
+                foreach (file f in r.project.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+            }
+
             return requests;
         }
 
@@ -93,7 +109,7 @@ namespace TriaCultura_service.Models
             }
             foreach (file f in files)
             {
-                f.SerializeVirtualProperties = serialize;
+                f.SerializeVirtualProperties = false;
             }
             return files;
         }
@@ -116,6 +132,7 @@ namespace TriaCultura_service.Models
         {
             project p = context.projects.Where(x=> x.id_project == project_id).SingleOrDefault();
             author a = p.author;
+            a.SerializeVirtualProperties = false;
             return a;
         }
         
@@ -133,11 +150,22 @@ namespace TriaCultura_service.Models
         public static List<rating> getRatingsWhereAuthor(int user_id)
         {
             List<rating> ratings = context.ratings.Where(x => x.user_id == user_id).ToList();
+            foreach (rating r in ratings)
+            {
+                foreach (file f in r.project.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+            }
             return ratings;
         }
         public static rating getRatingsWhereAuthor(int user_id, int project_id)
         {
             rating rating = context.ratings.Where(x => x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            foreach (file f in rating.project.files)
+            {
+                f.SerializeVirtualProperties = false;
+            }
             return rating;
         }
 
