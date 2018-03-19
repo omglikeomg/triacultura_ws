@@ -9,11 +9,21 @@
 
 namespace TriaCultura_service.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class vote
     {
+        public vote ()
+        {
+
+        }
+
+        public vote (bool serialize)
+        {
+            this.SerializeVirtualProperties = serialize;
+        }
         public int id_vote { get; set; }
         public System.DateTime date { get; set; }
         public int project_id { get; set; }
@@ -21,5 +31,16 @@ namespace TriaCultura_service.Models
     
         public virtual project project { get; set; }
         public virtual user user { get; set; }
+        [JsonIgnore]
+        public bool SerializeVirtualProperties { get; set; }
+
+        public bool ShouldSerializeuser()
+        {
+            return SerializeVirtualProperties;
+        }
+        public bool ShouldSerializeproject()
+        {
+            return SerializeVirtualProperties;
+        }
     }
 }

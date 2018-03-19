@@ -12,15 +12,24 @@ namespace TriaCultura_service.Models
         {
             user us = context.users.Where(x => x.dni == dni).SingleOrDefault();
             us.SerializeVirtualProperties = serialize;
+            foreach (rating r in us.ratings)
+            {
+                r.project.SerializeVirtualProperties = false;
+            }
+            foreach (vote v in us.votes)
+            {
+                v.project.SerializeVirtualProperties = false;
+            }
             return us;
         }
 
-        public static user ChangePasswd(int user_id, string passwd)
+        public static user ChangePasswd(user u)
         {
-            user us = context.users.Where(x => x.id == user_id).SingleOrDefault();
-            us.password = passwd;
+            context.users.Where(x => x.id == u.id).SingleOrDefault().password = u.password;
+            //context.users.Where(x => x.id == u.id).SingleOrDefault().email = u.email;
+            u = context.users.Where(x => x.id == u.id).SingleOrDefault();
             context.SaveChanges();
-            return us;
+            return u;
         }
 
         public static List<project> GetProjectes(int place_id, bool serialize)
@@ -40,6 +49,10 @@ namespace TriaCultura_service.Models
                 foreach(file f in p.files)
                 {
                     f.SerializeVirtualProperties = false;
+                }
+                foreach (vote v in p.votes)
+                {
+                    v.SerializeVirtualProperties = false;
                 }
             }
 
@@ -78,11 +91,8 @@ namespace TriaCultura_service.Models
             return requests;
         }
 
-        public static vote postVote(int user_id, int project_id)
+        public static vote postVote(vote v)
         {
-            vote v = new vote();
-            v.project_id = project_id;
-            v.user_id = user_id;
             v.date = DateTime.Now;
             context.votes.Add(v);
             context.SaveChanges();
