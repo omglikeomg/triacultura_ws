@@ -21,14 +21,14 @@ namespace TriaCultura_service.Models
         public string path { get; set; }
         public Nullable<int> project_id { get; set; }
         public byte[] file_content { get; set; }
-    
+
         public virtual project project { get; set; }
 
-        public file (bool with_content)
+        public file(bool with_content)
         {
-            SerializeVirtualProperties = with_content;   
+            SerializeVirtualProperties = with_content;
         }
-        public file ()
+        public file()
         {
 
         }

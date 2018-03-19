@@ -27,7 +27,7 @@ namespace TriaCultura_service.Models
             this.place_has_capacity = new HashSet<place_has_capacity>();
             this.requests = new HashSet<request>();
         }
-    
+
         public int id_place { get; set; }
         public string name { get; set; }
         public int capacity { get; set; }

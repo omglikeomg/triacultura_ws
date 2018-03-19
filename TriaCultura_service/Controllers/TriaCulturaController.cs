@@ -69,10 +69,10 @@ namespace TriaCultura_service.Controllers
         }
 
         //DELETE api/votes
-        [Route("api/votes/")]
-        public HttpResponseMessage DeleteVote([FromBody]int user_id, [FromBody]int project_id)
+        [Route("api/votes/{id?}")]
+        public HttpResponseMessage DeleteVote(int id)
         {
-            TriaCulturaRepository.removeVote(user_id, project_id);
+            TriaCulturaRepository.removeVote(id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }

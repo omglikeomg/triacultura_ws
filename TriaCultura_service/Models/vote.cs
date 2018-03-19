@@ -15,12 +15,12 @@ namespace TriaCultura_service.Models
 
     public partial class vote
     {
-        public vote ()
+        public vote()
         {
 
         }
 
-        public vote (bool serialize)
+        public vote(bool serialize)
         {
             this.SerializeVirtualProperties = serialize;
         }
@@ -28,7 +28,7 @@ namespace TriaCultura_service.Models
         public System.DateTime date { get; set; }
         public int project_id { get; set; }
         public int user_id { get; set; }
-    
+
         public virtual project project { get; set; }
         public virtual user user { get; set; }
         [JsonIgnore]

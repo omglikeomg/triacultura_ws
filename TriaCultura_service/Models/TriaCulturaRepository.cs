@@ -99,9 +99,9 @@ namespace TriaCultura_service.Models
             return v;
         }
 
-        public static void removeVote(int user_id, int project_id)
+        public static void removeVote(int vote_id)
         {
-            vote v = context.votes.Where(x=> x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            vote v = context.votes.Where(x => x.id_vote == vote_id).SingleOrDefault();
             context.votes.Remove(v);
             context.SaveChanges();
 

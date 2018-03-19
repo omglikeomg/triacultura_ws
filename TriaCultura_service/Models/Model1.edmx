@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="triaculturaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="triaculturaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="author">
           <Key>
             <PropertyRef Name="dni" />
@@ -89,6 +89,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dni" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="250" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="vote">
           <Key>
@@ -271,8 +273,7 @@
             <End Role="vote" EntitySet="vote" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="triaculturaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -378,6 +379,8 @@
           <Property Name="password" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="ratings" Relationship="Self.FK_rating_user" FromRole="user" ToRole="rating" />
           <NavigationProperty Name="votes" Relationship="Self.FK_vote_user" FromRole="user" ToRole="vote" />
+          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vote">
           <Key>
@@ -655,6 +658,8 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="triaculturaDBModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="password" ColumnName="password" />

@@ -41,11 +41,13 @@ namespace TriaCultura_service.Models
         }
 
 
-
         public int id { get; set; }
         public string dni { get; set; }
         public string password { get; set; }
-    
+
+        public string email { get; set; }
+        public string name { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rating> ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
