@@ -20,11 +20,11 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        // POST api/usuari
+        // PUT api/usuari
         [Route("api/usuari/")]
-        public HttpResponseMessage PostNewPass([FromBody]user u)
+        public HttpResponseMessage PutNewPass([FromBody]user u)
         {
-            var user = TriaCulturaRepository.ChangePasswd(u);
+            var user = TriaCulturaRepository.ChangeUsr(u);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, user);
             return response;
         }
@@ -58,11 +58,20 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        //POST api/votes
-        [Route("api/votes/")]
-        public HttpResponseMessage PostNewVote([FromBody]vote v)
+        //GET api/vote
+        [Route("api/vote/{user_id?}/{project_id?}")]
+        public HttpResponseMessage getVote_by_ids(int user_id, int project_id)
         {
-            var vote = TriaCulturaRepository.postVote(v);
+            var vote = TriaCulturaRepository.getVote(user_id, project_id);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, vote);
+            return response;
+        }
+
+        //POST api/votes
+        [Route("api/votes/{user_id}/{project_id}")]
+        public HttpResponseMessage PostNewVote(int user_id, int project_id)
+        {
+            var vote = TriaCulturaRepository.postVote(user_id,project_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, vote);
 
             return response;

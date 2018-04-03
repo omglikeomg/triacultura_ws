@@ -23,13 +23,13 @@ namespace TriaCultura_service.Models
             return us;
         }
 
-        public static user ChangePasswd(user u)
+        public static user ChangeUsr(user u)
         {
             context.users.Where(x => x.id == u.id).SingleOrDefault().password = u.password;
-            //context.users.Where(x => x.id == u.id).SingleOrDefault().email = u.email;
-            u = context.users.Where(x => x.id == u.id).SingleOrDefault();
+            context.users.Where(x => x.id == u.id).SingleOrDefault().email = u.email;
             context.SaveChanges();
-            return u;
+            
+            return context.users.Where(x => x.id == u.id).SingleOrDefault();
         }
 
         public static List<project> GetProjectes(int place_id, bool serialize)
@@ -72,6 +72,16 @@ namespace TriaCultura_service.Models
                 return votes;
         }
 
+        public static vote getVote(int user_id, int project_id)
+        {
+            vote v = context.votes.Where(x => x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            foreach (file f in v.project.files)
+            {
+                f.SerializeVirtualProperties = false;
+            }
+            return v;
+        }
+
         public static List<request> getAllRequest(bool serialize)
         {
             List<request> requests = context.requests.Where(x => x.is_winner == 1).OrderBy(x=>x.proposed_date).ToList();
@@ -91,12 +101,16 @@ namespace TriaCultura_service.Models
             return requests;
         }
 
-        public static vote postVote(vote v)
+        public static vote postVote(int user_id, int project_id)
         {
+            vote v = new vote();
+            v.id_vote = 0;
             v.date = DateTime.Now;
+            v.user_id = user_id;
+            v.project_id = project_id;
             context.votes.Add(v);
             context.SaveChanges();
-            return v;
+            return context.votes.Where(x => x.project_id == v.project_id && x.user_id == v.user_id).SingleOrDefault();
         }
 
         public static void removeVote(int vote_id)
