@@ -54,6 +54,7 @@ namespace TriaCultura_service.Models
                 {
                     v.SerializeVirtualProperties = false;
                 }
+                p.author.SerializeVirtualProperties = false;
             }
 
             return projects;
@@ -134,6 +135,7 @@ namespace TriaCultura_service.Models
             foreach (file f in files)
             {
                 f.SerializeVirtualProperties = false;
+                f.project.SerializeVirtualProperties = false;
             }
             return files;
         }
