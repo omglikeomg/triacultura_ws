@@ -31,14 +31,7 @@ namespace TriaCultura_service.Models
             this.votes = new HashSet<vote>();
             this.SerializeVirtualProperties = serialize;
         }
-    
-        public int id_project { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public string topic { get; set; }
-        public string author_dni { get; set; }
-        public string type { get; set; }
-    
+
         [JsonIgnore]
         public bool SerializeVirtualProperties { get; set; }
 
@@ -46,7 +39,7 @@ namespace TriaCultura_service.Models
         {
             return SerializeVirtualProperties;
         }
-    
+
         public bool ShouldSerializevotes()
         {
             return SerializeVirtualProperties;
@@ -59,6 +52,15 @@ namespace TriaCultura_service.Models
         {
             return SerializeVirtualProperties;
         }
+
+
+        public int id_project { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string topic { get; set; }
+        public string author_dni { get; set; }
+        public string type { get; set; }
+
         public virtual author author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<file> files { get; set; }

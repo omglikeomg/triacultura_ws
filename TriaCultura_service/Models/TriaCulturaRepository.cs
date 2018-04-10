@@ -12,15 +12,24 @@ namespace TriaCultura_service.Models
         {
             user us = context.users.Where(x => x.dni == dni).SingleOrDefault();
             us.SerializeVirtualProperties = serialize;
+            foreach (rating r in us.ratings)
+            {
+                r.project.SerializeVirtualProperties = false;
+            }
+            foreach (vote v in us.votes)
+            {
+                v.project.SerializeVirtualProperties = false;
+            }
             return us;
         }
 
-        public static user ChangePasswd(int user_id, string passwd)
+        public static user ChangeUsr(user u)
         {
-            user us = context.users.Where(x => x.id == user_id).SingleOrDefault();
-            us.password = passwd;
+            context.users.Where(x => x.id == u.id).SingleOrDefault().password = u.password;
+            context.users.Where(x => x.id == u.id).SingleOrDefault().email = u.email;
             context.SaveChanges();
-            return us;
+            
+            return context.users.Where(x => x.id == u.id).SingleOrDefault();
         }
 
         public static List<project> GetProjectes(int place_id, bool serialize)
@@ -37,6 +46,14 @@ namespace TriaCultura_service.Models
             foreach (project p in projects)
             {
                 p.SerializeVirtualProperties = serialize;
+                foreach(file f in p.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+                foreach (vote v in p.votes)
+                {
+                    v.SerializeVirtualProperties = false;
+                }
             }
 
             return projects;
@@ -45,11 +62,24 @@ namespace TriaCultura_service.Models
         public static List<vote> GetVotes(int user_id, bool serialize)
         {
             List<vote> votes = context.votes.Where(x => x.user_id == user_id).OrderBy(x=> x.date).ToList();
-         /* foreach (vote v in votes)
+         foreach (vote v in votes)
             {
-                v.SerializeVirtualProperties = serialize;
-            }*/
+                foreach (file f in v.project.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+            }
                 return votes;
+        }
+
+        public static vote getVote(int user_id, int project_id)
+        {
+            vote v = context.votes.Where(x => x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            foreach (file f in v.project.files)
+            {
+                f.SerializeVirtualProperties = false;
+            }
+            return v;
         }
 
         public static List<request> getAllRequest(bool serialize)
@@ -59,23 +89,33 @@ namespace TriaCultura_service.Models
             {
                 r.SerializeVirtualProperties = serialize;
             }*/
+
+            foreach (request r in requests)
+            {
+                foreach (file f in r.project.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+            }
+
             return requests;
         }
 
         public static vote postVote(int user_id, int project_id)
         {
             vote v = new vote();
-            v.project_id = project_id;
-            v.user_id = user_id;
+            v.id_vote = 0;
             v.date = DateTime.Now;
+            v.user_id = user_id;
+            v.project_id = project_id;
             context.votes.Add(v);
             context.SaveChanges();
-            return v;
+            return context.votes.Where(x => x.project_id == v.project_id && x.user_id == v.user_id).SingleOrDefault();
         }
 
-        public static void removeVote(int user_id, int project_id)
+        public static void removeVote(int vote_id)
         {
-            vote v = context.votes.Where(x=> x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            vote v = context.votes.Where(x => x.id_vote == vote_id).SingleOrDefault();
             context.votes.Remove(v);
             context.SaveChanges();
 
@@ -91,17 +131,32 @@ namespace TriaCultura_service.Models
             {
                 /*?*/
             }
-            /*foreach (file f in files)
+            foreach (file f in files)
             {
-                f.SerializeVirtualProperties = serialize;
-            }*/
+                f.SerializeVirtualProperties = false;
+            }
             return files;
+        }
+
+        public static file getSingleFile(int file_id)
+        {
+            file f = null;
+            try
+            {
+                f = context.files.Where(x => x.id_file == file_id).SingleOrDefault();
+            } catch (Exception e)
+            {
+                /*?*/
+            }
+            f.SerializeVirtualProperties = true;
+            return f;
         }
 
         public static author getAuthorWhereProject(int project_id)
         {
             project p = context.projects.Where(x=> x.id_project == project_id).SingleOrDefault();
             author a = p.author;
+            a.SerializeVirtualProperties = false;
             return a;
         }
         
@@ -112,18 +167,29 @@ namespace TriaCultura_service.Models
             if (ratings.Count > 0)
             {
                 double total = (double)ratings.Select(x => x.rate).Sum();
-                return total / ratings.Count;
+                return (double)total / ratings.Count;
             }
             return 0;
         }
         public static List<rating> getRatingsWhereAuthor(int user_id)
         {
             List<rating> ratings = context.ratings.Where(x => x.user_id == user_id).ToList();
+            foreach (rating r in ratings)
+            {
+                foreach (file f in r.project.files)
+                {
+                    f.SerializeVirtualProperties = false;
+                }
+            }
             return ratings;
         }
         public static rating getRatingsWhereAuthor(int user_id, int project_id)
         {
             rating rating = context.ratings.Where(x => x.user_id == user_id && x.project_id == project_id).SingleOrDefault();
+            foreach (file f in rating.project.files)
+            {
+                f.SerializeVirtualProperties = false;
+            }
             return rating;
         }
 

@@ -26,14 +26,14 @@ namespace TriaCultura_service.Models
         }
     
         public virtual DbSet<author> authors { get; set; }
+        public virtual DbSet<capacity> capacities { get; set; }
         public virtual DbSet<file> files { get; set; }
         public virtual DbSet<place> places { get; set; }
+        public virtual DbSet<place_has_capacity> place_has_capacity { get; set; }
         public virtual DbSet<project> projects { get; set; }
         public virtual DbSet<rating> ratings { get; set; }
         public virtual DbSet<request> requests { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<vote> votes { get; set; }
-        public virtual DbSet<capacity> capacities { get; set; }
-        public virtual DbSet<place_has_capacity> place_has_capacity { get; set; }
     }
 }

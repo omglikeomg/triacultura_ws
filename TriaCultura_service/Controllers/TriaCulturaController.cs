@@ -20,12 +20,21 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        // POST api/usuari
-        [Route("api/usuari/{id?}/{new_pass?}")]
-        public HttpResponseMessage PostNewPass(int id, string new_pass)
+        // PUT api/usuari
+        [Route("api/usuari/")]
+        public HttpResponseMessage PutNewPass([FromBody]user u)
         {
-            var user = TriaCulturaRepository.ChangePasswd(id, new_pass);
+            var user = TriaCulturaRepository.ChangeUsr(u);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, user);
+            return response;
+        }
+
+        //GET api/current
+        [Route("api/current")]
+        public HttpResponseMessage GetCurrent()
+        {
+            int i = 4; //puesto a mano de momento, es el "place" actualmente en _disputa_
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, i);
             return response;
         }
 
@@ -58,21 +67,30 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        //PUT api/votes
-        [Route("api/votes/{user_id?}/{project_id?}")]
+        //GET api/vote
+        [Route("api/vote/{user_id?}/{project_id?}")]
+        public HttpResponseMessage getVote_by_ids(int user_id, int project_id)
+        {
+            var vote = TriaCulturaRepository.getVote(user_id, project_id);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, vote);
+            return response;
+        }
+
+        //POST api/votes
+        [Route("api/votes/{user_id}/{project_id}")]
         public HttpResponseMessage PostNewVote(int user_id, int project_id)
         {
-            var vote = TriaCulturaRepository.postVote(user_id, project_id);
+            var vote = TriaCulturaRepository.postVote(user_id,project_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, vote);
 
             return response;
         }
 
         //DELETE api/votes
-        [Route("api/votes/{user_id?}/{project_id?}")]
-        public HttpResponseMessage DeleteVote(int user_id, int project_id)
+        [Route("api/votes/{id?}")]
+        public HttpResponseMessage DeleteVote(int id)
         {
-            TriaCulturaRepository.removeVote(user_id, project_id);
+            TriaCulturaRepository.removeVote(id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
@@ -103,6 +121,15 @@ namespace TriaCultura_service.Controllers
             var files = TriaCulturaRepository.getfiles(project_id, false);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, files);
 
+            return response;
+        }
+
+        //GET api/file
+        [Route("api/file/{file_id?}")]
+        public HttpResponseMessage getSingleFile(int file_id)
+        {
+            var file = TriaCulturaRepository.getSingleFile(file_id);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, file);
             return response;
         }
 

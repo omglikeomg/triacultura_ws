@@ -9,9 +9,10 @@
 
 namespace TriaCultura_service.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class file
     {
         public int id_file { get; set; }
@@ -19,7 +20,25 @@ namespace TriaCultura_service.Models
         public string extension { get; set; }
         public string path { get; set; }
         public Nullable<int> project_id { get; set; }
-    
+        public byte[] file_content { get; set; }
+
         public virtual project project { get; set; }
+
+        public file(bool with_content)
+        {
+            SerializeVirtualProperties = with_content;
+        }
+        public file()
+        {
+
+        }
+        [JsonIgnore]
+        public bool SerializeVirtualProperties { get; set; }
+
+        public bool ShouldSerializefile_content()
+        {
+            return SerializeVirtualProperties;
+        }
+
     }
 }
