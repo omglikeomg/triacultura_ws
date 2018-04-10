@@ -39,6 +39,15 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
+        //GET api/project/
+        [Route("api/project/{project_id?}")]
+        public HttpResponseMessage getProject(int project_id)
+        {
+            var project = TriaCulturaRepository.getProjectById(project_id);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, project);
+            return response;
+        }
+
         //GET api/votes
         [Route("api/votes/{user_id?}")]
         public HttpResponseMessage GetVotes_for_user(int user_id)
