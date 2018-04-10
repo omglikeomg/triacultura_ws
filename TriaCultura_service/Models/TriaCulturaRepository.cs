@@ -195,5 +195,12 @@ namespace TriaCultura_service.Models
             return rating;
         }
 
+        public static project getProjectById(int project_id)
+        {
+            project p = context.projects.Where(x => x.id_project == project_id).SingleOrDefault();
+
+            return p;
+        }
+
     }
 }
