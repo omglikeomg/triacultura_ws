@@ -34,6 +34,8 @@ namespace TriaCultura_service.Models
 
         [JsonIgnore]
         public bool SerializeVirtualProperties { get; set; }
+        [JsonIgnore]
+        public bool SerializeVirtualRatings { get; set; }
 
         public bool ShouldSerializefiles()
         {
@@ -50,7 +52,7 @@ namespace TriaCultura_service.Models
         }
         public bool ShouldSerializeratings()
         {
-            return SerializeVirtualProperties;
+            return SerializeVirtualRatings;
         }
 
 

@@ -55,6 +55,7 @@ namespace TriaCultura_service.Models
                     v.SerializeVirtualProperties = false;
                 }
                 p.author.SerializeVirtualProperties = false;
+                p.SerializeVirtualRatings = false;
             }
 
             return projects;
