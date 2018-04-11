@@ -209,6 +209,7 @@ namespace TriaCultura_service.Models
             r.user_id = user_id;
             r.rate = rate;
             context.ratings.Add(r);
+            r.project.SerializeVirtualProperties = false;
             return context.ratings.Where(x=> x.project_id == project_id && x.user_id == user_id).SingleOrDefault();
         }
 
