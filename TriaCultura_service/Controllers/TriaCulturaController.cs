@@ -126,7 +126,7 @@ namespace TriaCultura_service.Controllers
 
         //GET api/file
         [Route("api/file/{file_id?}")]
-        public HttpResponseMessage getSingleFile(int file_id)
+        public HttpResponseMessage GetSingleFile(int file_id)
         {
             var file = TriaCulturaRepository.getSingleFile(file_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, file);
@@ -160,6 +160,15 @@ namespace TriaCultura_service.Controllers
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating);
 
             return response;
+        }
+
+        [Route("api/rating/{user_id?}/{project_id?}/{rate}")]
+        public HttpResponseMessage PutUserRating_for_project(int user_id, int project_id, int rate)
+        {
+            var rating = TriaCulturaRepository.putRating(user_id, project_id, rate);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating);
+            return response;
+            
         }
 
     }

@@ -202,5 +202,15 @@ namespace TriaCultura_service.Models
             return p;
         }
 
+        public static rating putRating (int user_id, int project_id, int rate)
+        {
+            rating r = new rating();
+            r.project_id = project_id;
+            r.user_id = user_id;
+            r.rate = rate;
+            context.ratings.Add(r);
+            return context.ratings.Where(x=> x.project_id == project_id && x.user_id == user_id).SingleOrDefault();
+        }
+
     }
 }
