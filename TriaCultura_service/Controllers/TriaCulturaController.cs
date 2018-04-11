@@ -163,9 +163,9 @@ namespace TriaCultura_service.Controllers
         }
 
         [Route("api/rating/{user_id?}/{project_id?}/{rate}")]
-        public HttpResponseMessage PutUserRating_for_project(int user_id, int project_id, int rate)
+        public HttpResponseMessage PutUserRating_for_project([FromBody]rating r)
         {
-            var rating = TriaCulturaRepository.putRating(user_id, project_id, rate);
+            var rating = TriaCulturaRepository.putRating(r.user_id, r.project_id, (int)r.rate);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating);
             return response;
             
