@@ -162,7 +162,7 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        [Route("api/rating/{user_id?}/{project_id?}/{rate}")]
+        [Route("api/rating/")]
         public HttpResponseMessage PutUserRating_for_project([FromBody]rating r)
         {
             var rating = TriaCulturaRepository.putRating(r.user_id, r.project_id, (int)r.rate);
