@@ -97,6 +97,7 @@ namespace TriaCultura_service.Models
                 {
                     f.SerializeVirtualProperties = false;
                 }
+                r.place.SerializeVirtualProperties = false;
             }
 
             return requests;
