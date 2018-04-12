@@ -216,5 +216,10 @@ namespace TriaCultura_service.Models
             return context.ratings.Where(x=> x.project_id == project_id && x.user_id == user_id).SingleOrDefault();
         }
 
+        public static int last_rating_id ()
+        {
+            return context.ratings.Last().id_rating;
+        }
+
     }
 }

@@ -162,5 +162,14 @@ namespace TriaCultura_service.Controllers
             
         }
 
+        //GET api/rating/last_id
+        [Route("api/rating/last_id")]
+        public HttpResponseMessage GetLastIdRating()
+        {
+            var rating_id = TriaCulturaRepository.last_rating_id();
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating_id);
+            return response;
+        }
+
     }
 }
