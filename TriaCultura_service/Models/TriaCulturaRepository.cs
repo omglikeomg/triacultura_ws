@@ -99,6 +99,7 @@ namespace TriaCultura_service.Models
                     f.SerializeVirtualProperties = false;
                 }
                 r.place.SerializeVirtualProperties = false;
+                r.place.place_has_capacity = null;
             }
 
             return requests;

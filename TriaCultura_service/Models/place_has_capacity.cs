@@ -21,5 +21,7 @@ namespace TriaCultura_service.Models
     
         public virtual capacity capacity { get; set; }
         public virtual place place { get; set; }
+
+
     }
 }
