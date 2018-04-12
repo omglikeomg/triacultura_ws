@@ -95,15 +95,6 @@ namespace TriaCultura_service.Controllers
             return response;
         }
 
-        //GET api/project
-        //[Route("api/project/{project_id?")]
-        //public HttpResponseMessage GetProject(int project_id)
-        //{
-        //    var project = Repository.get
-
-        //    return response;
-        //}
-
         //GET api/winningrequests
         [Route("api/winningrequests")]
         public HttpResponseMessage GetWinningRequests()
