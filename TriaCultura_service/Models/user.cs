@@ -9,10 +9,9 @@
 
 namespace TriaCultura_service.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-
+    
     public partial class user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,33 +20,13 @@ namespace TriaCultura_service.Models
             this.ratings = new HashSet<rating>();
             this.votes = new HashSet<vote>();
         }
-        public user(bool serialize)
-        {
-            this.ratings = new HashSet<rating>();
-            this.votes = new HashSet<vote>();
-            this.SerializeVirtualProperties = serialize;
-        }
-
-        [JsonIgnore]
-        public bool SerializeVirtualProperties { get; set; }
-
-        public bool ShouldSerializevotes()
-        {
-            return SerializeVirtualProperties;
-        }
-        public bool ShouldSerializeratings()
-        {
-            return SerializeVirtualProperties;
-        }
-
-
+    
         public int id { get; set; }
         public string dni { get; set; }
         public string password { get; set; }
-
         public string email { get; set; }
         public string name { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rating> ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
