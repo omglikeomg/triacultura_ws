@@ -218,7 +218,7 @@ namespace TriaCultura_service.Models
 
         public static int last_rating_id ()
         {
-            return context.ratings.Last().id_rating;
+            return context.ratings.ToList().Last().id_rating;
         }
 
     }
