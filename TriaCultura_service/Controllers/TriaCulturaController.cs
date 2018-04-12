@@ -33,7 +33,7 @@ namespace TriaCultura_service.Controllers
         [Route("api/current")]
         public HttpResponseMessage GetCurrent()
         {
-            int i = 4; //puesto a mano de momento, es el "place" actualmente en _disputa_
+            int i = 5; //puesto a mano de momento, es el "place" actualmente en _disputa_
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, i);
             return response;
         }
