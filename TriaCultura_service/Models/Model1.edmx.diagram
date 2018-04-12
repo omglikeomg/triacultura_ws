@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="801088a36cd9423796dc383b52d0f73b" Name="Diagram1" ZoomLevel="54">
+      <Diagram DiagramId="801088a36cd9423796dc383b52d0f73b" Name="Diagram1">
         <EntityTypeShape EntityType="triaculturaDBModel.author" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.capacity" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="triaculturaDBModel.file" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
