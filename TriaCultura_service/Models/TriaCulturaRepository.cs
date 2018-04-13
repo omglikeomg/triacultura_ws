@@ -205,16 +205,23 @@ namespace TriaCultura_service.Models
             return p;
         }
 
-        public static rating putRating (int user_id, int project_id, int rate)
+        public static rating putRating (rating r)
         {
-            rating r = new rating();
-            r.project_id = project_id;
-            r.user_id = user_id;
-            r.rate = rate;
-            context.ratings.Add(r);
-            r.project.SerializeVirtualProperties = false;
+                if (r.id_rating != 0 || context.ratings.Where(x => x.project_id == r.project_id && x.user_id == r.user_id).SingleOrDefault() != null)
+                {
+                    context.ratings.Where(x => x.project_id == r.project_id && x.user_id == r.user_id).SingleOrDefault().rate = r.rate;
+                    context.ratings.Where(x => x.project_id == r.project_id && x.user_id == r.user_id).SingleOrDefault().comment = r.comment;
+                }            
+            else 
+            {
+                context.ratings.Add(r);
+            }
+            if (r.project != null)
+            {
+                r.project.SerializeVirtualProperties = false;
+            }
             context.SaveChanges();
-            return context.ratings.Where(x=> x.project_id == project_id && x.user_id == user_id).SingleOrDefault();
+            return context.ratings.Where(x=> x.id_rating == r.id_rating).SingleOrDefault();
         }
 
         public static int last_rating_id ()

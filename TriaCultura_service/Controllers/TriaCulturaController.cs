@@ -156,20 +156,20 @@ namespace TriaCultura_service.Controllers
         [Route("api/rating/")]
         public HttpResponseMessage PutUserRating_for_project([FromBody]rating r)
         {
-            var rating = TriaCulturaRepository.putRating(r.user_id, r.project_id, (int)r.rate);
+            var rating = TriaCulturaRepository.putRating(r);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating);
             return response;
             
         }
 
         //GET api/rating/last_id
-        [Route("api/rating/last_id")]
-        public HttpResponseMessage GetLastIdRating()
-        {
-            var rating_id = TriaCulturaRepository.last_rating_id();
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating_id);
-            return response;
-        }
+        //[Route("api/rating/last_id")]
+        //public HttpResponseMessage GetLastIdRating()
+        //{
+        //    var rating_id = TriaCulturaRepository.last_rating_id();
+        //    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, rating_id);
+        //    return response;
+        //}
 
     }
 }
