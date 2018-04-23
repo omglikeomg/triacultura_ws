@@ -201,6 +201,9 @@ namespace TriaCultura_service.Models
         public static project getProjectById(int project_id)
         {
             project p = context.projects.Where(x => x.id_project == project_id).SingleOrDefault();
+            p.SerializeVirtualProperties = true;
+            p.SerializeVirtualRatings = false;
+
 
             return p;
         }
