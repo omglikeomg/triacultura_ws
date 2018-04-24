@@ -176,6 +176,19 @@ namespace TriaCultura_service.Models
             }
             return 0;
         }
+
+        public static List<request> getVotedProjects(int user_id)
+        {
+
+            List<request> reqs = context.requests.Where(x => x.project.votes.Where(y => y.user_id == user_id).ToList().Count > 0).OrderBy(x => x.proposed_date).ToList();
+            foreach (request r in reqs)
+            {
+                r.project.SerializeVirtualRatings = false;
+                r.project.SerializeVirtualProperties = false;
+            }
+            return reqs;
+        }
+
         public static List<rating> getRatingsWhereAuthor(int user_id)
         {
             List<rating> ratings = context.ratings.Where(x => x.user_id == user_id).ToList();
