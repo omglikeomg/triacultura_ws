@@ -179,14 +179,29 @@ namespace TriaCultura_service.Models
 
         public static List<request> getVotedProjects(int user_id)
         {
+            List<vote> valid_votes = context.votes.Where(x => x.user_id == user_id).ToList();
+            List<request> results = new List<request>();
+            foreach (vote v in valid_votes)
+            {
+                List<request> requests = v.project.requests.ToList();
 
-            List<request> reqs = context.requests.Where(x => x.project.votes.Where(y => y.user_id == user_id).ToList().Count > 0).OrderBy(x => x.proposed_date).ToList();
-            foreach (request r in reqs)
+                foreach (request r in requests)
+                {
+                    DateTime dt = (DateTime)r.proposed_date;
+                    if (dt.Month == v.date.Month)
+                    {
+                        results.Add(r);
+                    }
+                } 
+
+            }
+
+            foreach (request r in results)
             {
                 r.project.SerializeVirtualRatings = false;
                 r.project.SerializeVirtualProperties = false;
             }
-            return reqs;
+            return results;
         }
 
         public static List<rating> getRatingsWhereAuthor(int user_id)

@@ -163,7 +163,7 @@ namespace TriaCultura_service.Controllers
         }
 
         //GET api/requests/{user_id}
-        [Route ("api/requests/{user_id")]
+        [Route ("api/requests/{user_id}")]
         public HttpResponseMessage getvotedprojects(int user_id)
         {
             var requests = TriaCulturaRepository.getVotedProjects(user_id);
