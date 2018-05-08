@@ -97,9 +97,9 @@ namespace TriaCultura_service.Controllers
 
         //GET api/project/votes/{proj_id}
         [Route("api/project/votes/{proj_id}")]
-        public HttpResponseMessage CountVotes(int proj_id)
+        public HttpResponseMessage GetCountVotes(int proj_id)
         {
-            int qnt = TriaCulturaRepository.count_votes(proj_id);
+            var qnt = TriaCulturaRepository.count_votes(proj_id);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, qnt);
             return response;
         }

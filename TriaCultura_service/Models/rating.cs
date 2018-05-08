@@ -15,6 +15,8 @@ namespace TriaCultura_service.Models
 
     public partial class rating
     {
+        public rating() { }
+
         public rating (bool serialize)
         {
             SerializeVirtualProperties = serialize;
