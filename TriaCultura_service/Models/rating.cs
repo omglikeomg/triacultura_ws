@@ -9,11 +9,24 @@
 
 namespace TriaCultura_service.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class rating
     {
+        public rating (bool serialize)
+        {
+            SerializeVirtualProperties = serialize;
+        }
+        [JsonIgnore]
+        public bool SerializeVirtualProperties { get; set; }
+
+        public bool ShouldSerializeproject()
+        {
+            return SerializeVirtualProperties;
+        }
+
         public int id_rating { get; set; }
         public Nullable<int> rate { get; set; }
         public int user_id { get; set; }

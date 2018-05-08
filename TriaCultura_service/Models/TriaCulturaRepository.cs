@@ -230,10 +230,17 @@ namespace TriaCultura_service.Models
         {
             project p = context.projects.Where(x => x.id_project == project_id).SingleOrDefault();
             p.SerializeVirtualProperties = true;
-            p.SerializeVirtualRatings = false;
-
+            foreach (rating r in p.ratings)
+            {
+                r.SerializeVirtualProperties = false;
+            }
 
             return p;
+        }
+
+        public static int count_votes (int proj_id)
+        {
+            return context.projects.Where(x => x.id_project == proj_id).SingleOrDefault().votes.Count;
         }
 
         public static rating putRating (rating r)
